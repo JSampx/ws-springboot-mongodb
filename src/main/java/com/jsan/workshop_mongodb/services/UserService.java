@@ -6,9 +6,6 @@ import com.jsan.workshop_mongodb.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.jsan.workshop_mongodb.repository.UserRepository;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -28,6 +25,18 @@ public class UserService {
 
     public User insert(User obj){
         return repo.insert(obj);
+    }
+
+    public User update(User obj){
+        User newObj = findById(obj.getId());
+        newObj.setName(obj.getName());
+        newObj.setEmail(obj.getEmail());
+        return repo.save(newObj);
+    }
+
+    public void deleteById(String id){
+        findById(id);
+        repo.deleteById(id);
     }
 
     public User fromDTO(UserDTO objDto){
